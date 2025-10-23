@@ -1,24 +1,17 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Running the project
 
-Things you may want to cover:
+Sems requires docker to run.
 
-* Ruby version
+Setup the project with
 
-* System dependencies
+```
+$ docker compose build
+```
 
-* Configuration
+Then run tests with
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+$ docker compose run --rm web bin/rails test
+```

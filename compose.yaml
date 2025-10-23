@@ -1,0 +1,17 @@
+services:
+  db:
+    image: mongo:8.0
+    restart: always
+    ports:
+      - "27017:27017"
+  web:
+    working_dir: /etc/sems
+    build: .
+    environment:
+      - RAILS_MASTER_KEY
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/etc/sems
+    depends_on:
+      - db

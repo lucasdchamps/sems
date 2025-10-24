@@ -28,6 +28,14 @@ class Station
     session
   end
 
+  def delete_session(session_id)
+    session = self.sessions.find { |session| session.id == session_id }
+    raise ArgumentError.new "invalid session_id for this station" unless session
+    
+    session.delete
+    self.load_balance
+  end
+
   private
   
   def sessions

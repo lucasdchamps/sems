@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   post "stations/:id/sessions", to: "stations#create_session", as: "create_session"
 
+  delete "stations/:id/sessions/:session_id", to: "stations#delete_session", as: "delete_session"
+
   # Defines the root path route ("/")
   # root "posts#index"
 end

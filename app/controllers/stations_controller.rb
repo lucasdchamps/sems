@@ -12,4 +12,10 @@ class StationsController < ApplicationController
     )
     render json: { session_id: session.id, allocated_power: session.allocated_power }
   end
+
+  def delete_session
+    station = Station.find(params[:id])
+    station.delete_session(BSON::ObjectId.from_string(params[:session_id]))
+    render json: { success: true }
+  end
 end

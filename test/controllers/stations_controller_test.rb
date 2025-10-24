@@ -60,4 +60,23 @@ class StationControllerTest < ActionDispatch::IntegrationTest
     assert_equal(150, session["allocated_power"])
     assert_equal(station.chargers[0].sessions[0].id.to_s, session["session_id"])
   end
+
+  test "delete_session should fail when called on a non-existing station" do
+    delete delete_session_path(42, session_id: 42)
+    
+    assert_response :not_found
+  end
+
+  test "delete_session should delete an existing and reallocate power" do
+    session1 = Session.create(connector: @charger.connectors[0], allocated_power: 100, vehicle_max_power: 150)
+    session2 = Session.create(connector: @charger.connectors[1], allocated_power: 100, vehicle_max_power: 150)
+
+    delete delete_session_path(@station.id, session_id: session1.id.to_s)
+
+    station = Station.find_by(name: "ELECTAR_PARIS_15")
+    assert_equal([{
+        session_id: session2.id,
+        allocated_power: 150
+    }], station.status)
+  end
 end

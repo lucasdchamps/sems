@@ -38,7 +38,9 @@ direction LR
         +String name
         +int grid_capacity
         +status()
+        +create_session()
         -sessions()
+        -load_balance()
     }
     class Charger {
         +int max_power

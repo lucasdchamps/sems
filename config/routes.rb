@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   get "stations/:id/status", to: "stations#status", as: "station_status"
 
+  post "stations/:id/sessions", to: "stations#create_session", as: "create_session"
+
   # Defines the root path route ("/")
   # root "posts#index"
 end

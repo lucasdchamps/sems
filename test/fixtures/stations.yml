@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+electra_paris_15:
+  name: ELECTAR_PARIS_15
+  grid_capacity: 400
+  chargers:
+    - max_power: 300
+      connectors: [{}, {}]
+    - max_power: 300
+      connectors: [{}, {}]
+  battery:
+    capacity: 200
+    power: 100

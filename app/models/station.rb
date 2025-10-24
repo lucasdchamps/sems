@@ -6,4 +6,19 @@ class Station
 
   embeds_many :chargers
   embeds_one :battery
+
+  def status
+    self.sessions.map do |session|
+      {
+        session_id: session.id,
+        allocated_power: session.allocated_power
+      }
+    end
+  end
+
+  private
+  
+  def sessions
+    self.chargers.map(&:sessions).flatten
+  end
 end

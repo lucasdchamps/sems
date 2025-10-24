@@ -4,4 +4,8 @@ class Connector
 
   embedded_in :charger
   embeds_one :session
+
+  def available?
+    self.session.nil?
+  end
 end

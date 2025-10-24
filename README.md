@@ -43,6 +43,11 @@ direction LR
     class Charger {
         +int max_power
         +sessions()
+        +create_session()
+        +average_power()
+    }
+    class Connector {
+        +available?()
     }
     class Session {
         +int vehicle_max_power

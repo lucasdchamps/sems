@@ -37,6 +37,8 @@ direction LR
     class Station {
         +String name
         +int grid_capacity
+        +status()
+        -sessions()
     }
     class Charger {
         +int max_power

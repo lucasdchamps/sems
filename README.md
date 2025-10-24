@@ -39,6 +39,7 @@ direction LR
         +int grid_capacity
         +status()
         +create_session()
+        +delete_session()
         -sessions()
         -load_balance()
     }

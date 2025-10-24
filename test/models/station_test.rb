@@ -47,4 +47,31 @@ class StationTest < ActiveSupport::TestCase
     assert_equal(100, session3.allocated_power)
     assert_equal(100, session4.allocated_power)
   end
+
+  test "delete_session fails when deleting a non-existent session" do
+    assert_raises ArgumentError, "invalid session_id for this station" do
+      @station.delete_session(42)
+    end
+  end
+
+  test "delete_session should delete the station's session" do
+    session = Session.create(connector: @connector1)
+    
+    @station.delete_session(session.id)
+
+    assert_equal(0, Session.count)
+  end
+
+  test "scenario 2: delete_session reallocates power within grid constraint" do
+    session1 = @station.create_session(@charger1.id, @connector1.id, 150)
+    session2 = @station.create_session(@charger1.id, @connector2.id, 150)
+    session3 = @station.create_session(@charger2.id, @connector3.id, 150)
+    session4 = @station.create_session(@charger2.id, @connector4.id, 150)
+
+    @station.delete_session(session1.id)
+
+    assert_equal(133, session2.allocated_power)
+    assert_equal(133, session3.allocated_power)
+    assert_equal(134, session4.allocated_power)
+  end
 end

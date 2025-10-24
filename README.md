@@ -60,3 +60,20 @@ direction LR
         +int power
     }
 ```
+
+## Endpoints
+
+Real world communications are modelized by HTTP endpoints. HTTP requests are handled by the model to inform about the active sessions or update them.
+
+```
+get "/stations/:station_id/status"
+
+returns the active sessions and their allocated powers
+```
+
+```
+post "/stations/:station_id/sessions { :charger_id, :connector_id, :vehicle_max_power }
+
+creates a session for a specific charger, and connector, and load balances
+the station's available power for its active sessions
+```

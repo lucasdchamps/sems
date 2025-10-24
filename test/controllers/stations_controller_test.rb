@@ -5,6 +5,7 @@ class StationControllerTest < ActionDispatch::IntegrationTest
     load_fixtures
     @station = Station.find_by(name: "ELECTAR_PARIS_15")
     @charger = @station.chargers[0]
+    @connector = @charger.connectors[0]
   end
 
   teardown do
@@ -38,5 +39,25 @@ class StationControllerTest < ActionDispatch::IntegrationTest
         "session_id" => session2.id.to_s,
         "allocated_power" => session2.allocated_power
     }], JSON.parse(@response.body))
+  end
+
+  test "create_session should fail when called on a non-existing station" do
+    post create_session_path(42)
+    
+    assert_response :not_found
+  end
+
+  test "create_session should create a session within the found station and load balance the station" do
+    post create_session_path(@station.id.to_s, {
+      charger_id: @charger.id.to_s,
+      connector_id: @connector.id.to_s,
+      vehicle_max_power: 150
+    })
+    
+    session = JSON.parse(@response.body)
+    station = Station.find_by(name: "ELECTAR_PARIS_15")
+    assert_response :success
+    assert_equal(150, session["allocated_power"])
+    assert_equal(station.chargers[0].sessions[0].id.to_s, session["session_id"])
   end
 end

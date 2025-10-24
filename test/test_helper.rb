@@ -7,6 +7,9 @@ module ActiveSupport
     # Run tests in parallel with specified workers
     parallelize(workers: :number_of_processors, with: :threads)
 
-    # Add more helper methods to be used by all tests here...
+    def load_fixtures
+      stations = YAML.load_file(File.join(File.dirname(__FILE__), "/fixtures/stations.yml"))
+      stations.each_value { |station| Station.create(station) }
+    end
   end
 end

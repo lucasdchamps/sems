@@ -36,6 +36,7 @@ direction LR
     }
     class Charger {
         +int max_power
+        +sessions()
     }
     class Session {
         +int vehicle_max_power

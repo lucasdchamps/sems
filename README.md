@@ -78,3 +78,9 @@ post "/stations/:station_id/sessions { :charger_id, :connector_id, :vehicle_max_
 creates a session for a specific charger, and connector, and load balances
 the station's available power for its active sessions
 ```
+
+```
+delete "/stations/:station_id/sessions/:session_id
+
+deletes the provided session and reallocates the station available power
+```

@@ -5,4 +5,8 @@ class Charger
 
   embedded_in :station
   embeds_many :connectors
+
+  def sessions
+    self.connectors.map(&:session).compact
+  end
 end
